@@ -46,7 +46,11 @@ export async function POST(request) {
       textOutput += `Episode Description: ${episode.episodeDescription}\n\n`;
     });
 
-    return new NextResponse(textOutput, { status: 200, headers: { "Content-Type": "text/plain" } });
+    // Return a JSON response containing the text output and podcast title
+    return NextResponse.json({
+      textOutput,
+      podcastTitle
+    }, { status: 200 });
   } catch (error) {
     console.error("Error fetching or parsing RSS feed:", error);
     return NextResponse.json({ error: "Failed to parse RSS feed" }, { status: 500 });
