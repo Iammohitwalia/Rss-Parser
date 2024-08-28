@@ -89,7 +89,11 @@ export default function Home() {
           <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
             {output}
           </pre>
+        
         )}
+         <Typography variant="h6" gutterBottom align="center">
+         Made By Mohit Walia- 2024 | NextJs
+        </Typography>
       </Container>
     </ThemeProvider>
   );
