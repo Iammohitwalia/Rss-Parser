@@ -16,15 +16,39 @@
   }
 }
 
+/* app/globals.css */
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #f0f0f0; /* Light grey background */
+  font-family: Arial, sans-serif; /* Use a clean font */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.container {
+  background: #c2c2c2; /* White background for the content */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  padding: 2rem;
+  max-width: 600px; /* Limit max width for better readability */
+  width: 100%; /* Full width within max width */
+}
+h1 {
+  font-size: 60px;
+  font-weight: 700;
+  font-family: 'circular';
+  text-transform: uppercase;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between form elements */
+}
+
 
 @layer utilities {
   .text-balance {
