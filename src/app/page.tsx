@@ -35,7 +35,7 @@ export default function Home() {
   const [output, setOutput] = useState("");
   const [podcastTitle, setPodcastTitle] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
