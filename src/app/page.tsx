@@ -33,8 +33,9 @@ const theme = createTheme({
 export default function Home() {
   const [rssUrl, setRssUrl] = useState("");
   const [output, setOutput] = useState("");
+  const [podcastTitle, setPodcastTitle] = useState("");
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -47,15 +48,16 @@ export default function Home() {
       });
 
       if (response.ok) {
-        const data = await response.text();
-        setOutput(data);
+        const data = await response.json();
+        setOutput(data.textOutput);
+        setPodcastTitle(data.podcastTitle);
 
-        // Create and download the text file
-        const blob = new Blob([data], { type: "text/plain" });
+        // Create and download the text file with dynamic file name
+        const blob = new Blob([data.textOutput], { type: "text/plain" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "PodcastTitle.txt";
+        a.download = `${data.podcastTitle.replace(/[^a-z0-9]/gi, '_')}.txt`; // Dynamic filename based on podcast title, sanitized
         a.click();
         window.URL.revokeObjectURL(url);
       } else {
@@ -89,11 +91,7 @@ export default function Home() {
           <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
             {output}
           </pre>
-        
         )}
-         <Typography variant="h6" gutterBottom align="center">
-         Made By Mohit Walia- 2024 | NextJs
-        </Typography>
       </Container>
     </ThemeProvider>
   );
