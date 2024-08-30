@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import Parser from "rss-parser";
 
 export async function POST(request) {
-  const { rssUrl } = await request.json();
+  const { rssUrl, podcastWebsite } = await request.json();
 
   if (!rssUrl) {
     return NextResponse.json({ error: "RSS URL is required" }, { status: 400 });
@@ -35,6 +35,7 @@ export async function POST(request) {
 
     // Generate the text output
     let textOutput = `Podcast Title: ${podcastTitle}\n`;
+    textOutput += `Podcast Website: ${podcastWebsite || "N/A"}\n`; // Add the podcast website to the output
     textOutput += `Listennotes URL: ${listenNotesUrl}\n`;
     textOutput += `Contact Name: ${contactName}\n`;
     textOutput += `Podcast Description: ${podcastDescription}\n\n`;
@@ -47,12 +48,18 @@ export async function POST(request) {
     });
 
     // Return a JSON response containing the text output and podcast title
-    return NextResponse.json({
-      textOutput,
-      podcastTitle
-    }, { status: 200 });
+    return NextResponse.json(
+      {
+        textOutput,
+        podcastTitle,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching or parsing RSS feed:", error);
-    return NextResponse.json({ error: "Failed to parse RSS feed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to parse RSS feed" },
+      { status: 500 }
+    );
   }
 }
