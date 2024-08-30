@@ -32,6 +32,7 @@ const theme = createTheme({
 
 export default function Home() {
   const [rssUrl, setRssUrl] = useState("");
+  const [podcastWebsite, setPodcastWebsite] = useState(""); // New state for podcast website
   const [output, setOutput] = useState("");
   const [podcastTitle, setPodcastTitle] = useState("");
 
@@ -44,7 +45,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ rssUrl }),
+        body: JSON.stringify({ rssUrl, podcastWebsite }), // Include podcastWebsite in the request body
       });
 
       if (response.ok) {
@@ -57,7 +58,7 @@ export default function Home() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${data.podcastTitle.replace(/[^a-z0-9]/gi, '_')}.txt`; // Dynamic filename based on podcast title, sanitized
+        a.download = `${data.podcastTitle.replace(/[^a-z0-9]/gi, "_")}.txt`; // Dynamic filename based on podcast title, sanitized
         a.click();
         window.URL.revokeObjectURL(url);
       } else {
@@ -82,6 +83,15 @@ export default function Home() {
             value={rssUrl}
             onChange={(e) => setRssUrl(e.target.value)}
             required
+            style={{ marginBottom: "16px" }} // Add margin for spacing
+          />
+          <TextField
+            label="Enter Podcast Website"
+            variant="outlined"
+            fullWidth
+            value={podcastWebsite}
+            onChange={(e) => setPodcastWebsite(e.target.value)}
+            style={{ marginBottom: "16px" }} // Add margin for spacing
           />
           <Button variant="contained" color="primary" type="submit">
             Submit
